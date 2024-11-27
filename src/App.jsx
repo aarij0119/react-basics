@@ -1,35 +1,74 @@
+import axios from 'axios'
 import React, { useState } from 'react'
-import Header from './components/Header';
-import Footer from './components/footer'
-import { data } from 'autoprefixer';
+
 
 const App = () => {
-  const [fullname, setfullname] = useState('');
-  const [username, setusername] = useState('');
-  const [useremail, setemail] = useState('');
-  const onsubmithandler = (e) => {
-    e.preventDefault()
-    console.log({
-     fullname: fullname,
-     username:username,
-     useremail: useremail 
-    })
-    setfullname('')
-    setusername('')
-    setemail('')
-    console.log("submitted")
-    
+  const [images, setimage] = useState([])
+  const getimages = async () => {
+    const response = await axios.get('https://picsum.photos/v2/list')
+    setimage(response.data)
   }
-  const data = {
-    name:"Aarij",
-    username:"Aarij",
-    age: "20",
-    email: "aarijdev@gmail.com"
-  } 
+  // 
+
   return (
     <>
-    
-      <div className="min-h-screen bg-zinc-900">
+        <div className='bg-zinc-800'>
+        <button className='bg-green-500 m-2 px-2 py-1 text-white font-bold rounded' onClick={getimages}>Get Images</button>
+        </div>
+      <div className='w-full min-h-screen bg-zinc-900 flex gap-2 flex-wrap  px-2 py-4'>
+      {images.map(function (image,key) {
+        return <>
+         <div className='w-1/4' key={key}>
+              <img className='w-full h-full bg-cover'  src={image.download_url} />
+            </div>
+        </>
+
+      })}
+        </div>
+      
+    </>
+  )
+}
+{
+
+  // importing header footer
+
+  // import Header from './components/Header';
+  // import Footer from './components/footer'
+
+  // object data
+  // const data = {
+  //   name:"Aarij",
+  //   username:"Aarij",
+  //   age: "20",
+  //   email: "aarijdev@gmail.com"
+  // } 
+
+  //Using Usestate 
+
+  // const [fullname, setfullname] = useState('');
+  // const [username, setusername] = useState('');
+  // const [useremail, setemail] = useState('');
+
+  //Form Handling 
+
+  // const onsubmithandler = (e) => {
+  //   e.preventDefault()
+  //   console.log({
+  //    fullname: fullname,
+  //    username:username,
+  //    useremail: useremail 
+  //   })
+  //   setfullname('')
+  //   setusername('')
+  //   setemail('')
+  //   console.log("submitted")
+
+  // }
+
+
+
+  /* <div className="min-h-screen bg-zinc-900">
       <Header />
         <div className='flex justify-center items-center my-28'>
         <div className="bg-zinc-700 p-8 rounded shadow-md w-full max-w-sm">
@@ -84,10 +123,6 @@ const App = () => {
         </div>
         </div>
       <Footer data={data} />  
-      </div>
-
-    </>
-  )
-}
+      </div> */}
 
 export default App
